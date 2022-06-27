@@ -1,0 +1,47 @@
+server:
+  port: 4004
+
+#mybatis:
+#  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+#  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  application:
+    name: Business #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource             # 当前数据源操作类型
+    driver-class-name: oracle.jdbc.driver.OracleDriver             # mysql驱动包
+    url: jdbc:oracle:thin:@10.255.238.131:1521/orcl # 数据库名称
+    #url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 10.255.238.67)(PORT = 1521))(CONNECT_DATA =(SERVICE_NAME = lsdlsw))) # 数据库名称
+    dbcp2:
+      min-idle: 5                                # 数据库连接池的最小维持连接数
+      initial-size: 5                            # 初始化连接数
+      max-total: 5                               # 最大连接数
+      max-wait-millis: 150
+    username: lspms
+    password: lspms2021
+  servlet:      #  上传文件设置
+    multipart:
+      max-file-size: 10MB  # 单个文件大小
+      max-request-size: 100MB  # 单次请求的总文件大小
+
+eureka:
+  client:
+    registerWithEureka: false # 服务注册开关
+    fetchRegistry: false # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://127.0.0.1:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
+
+
+mybatis-plus:
+  configuration:
+    # 打印日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapperLocations: classpath:mapper/*.xml

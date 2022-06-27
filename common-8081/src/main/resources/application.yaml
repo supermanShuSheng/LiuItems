@@ -1,0 +1,144 @@
+server:
+  port: 8081
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.shusheng.domain  # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  application:
+    name: common #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #  mysql 数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/shusheng?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # 配置redis
+  redis:
+    host: 127.0.0.1
+    port: 6379    #  端口
+    password: admin   #  密码
+    jedis:  #  连接池
+      pool:
+        max-active: 8  # 连接池最大连接数
+        max-wait: -1  #连接池最大阻塞等待时间 （使用负值表示没有限制）
+        max-idle: 500  #连接池中的最大空闲连接
+        min-idle: 0  #连接池中的最小空闲连接
+    lettuce:
+      shutdown-timeout: 0
+    timeout: 30000  #连接超时时间（毫秒）
+    database: 0 # 使用db0数据库进行存储
+  # sa-token配置
+  sa-token:
+    # token名称 (同时也是cookie名称)
+    token-name: satoken
+    # token有效期，单位s 默认30天, -1代表永不过期
+    timeout: 2592000
+    # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+    activity-timeout: 30
+    # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+    is-share: false
+    # token风格
+    token-style: uuid
+    # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+    is-concurrent: false
+  # 热部署
+#  devtools:
+#    restart:
+#      enabled: true  #设置开启热部署
+#      additional-paths: src/main/java #重启目录
+#      exclude: WEB-INF/**
+#    freemarker:
+#      cache: false    #页面不加载缓存，修改即时生效
+  kafka:
+    # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
+    bootstrap-servers: 139.196.224.150:9092
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 0
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: all
+    consumer:
+      # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
+      auto-commit-interval: 1S
+      # 该属性指定了消费者在读取一个没有偏移量的分区或者偏移量无效的情况下该作何处理：
+      # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
+      # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
+      auto-offset-reset: earliest
+      # 是否自动提交偏移量，默认值是true,为了避免出现重复数据和数据丢失，可以把它设置为false,然后手动提交偏移量
+      enable-auto-commit: true
+      # 键的反序列化方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 值的反序列化方式
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      #listner负责ack，每调用一次，就立即commit
+      ack-mode: manual_immediate
+#  quartz:
+#    #相关属性配置
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: quartzScheduler # 实例化名称
+#            instanceId: AUTO
+#          jobStore:
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX  #持久化
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#            tablePrefix: QRTZ_
+#            isClustered: false
+#            clusterCheckinInterval: 10000
+#            useProperties: false
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool  # 实例化使用的线程类
+#            threadCount: 10  # 并发个数
+#            threadPriority: 5  # 优先级
+#            threadsInheritContextClassLoaderOfInitializingThread: true
+#    #数据库方式
+#    job-store-type: JDBC
+#    #初始化表结构
+#    jdbc:
+#      initialize-schema: NEVER
+
+
+eureka:
+  client:
+    registerWithEureka: false # 服务注册开关
+    fetchRegistry: false # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://10.255.238.34:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
+
+#knife4j:
+#  # 开启增强配置
+#  enable: true
+#  # 开启生产环境屏蔽
+#  production: true
+
+
+
+# 短信配置
+sms:
+  channel: swrh-app
+  key: 13c60377feb54096b0ea211d30935ecd

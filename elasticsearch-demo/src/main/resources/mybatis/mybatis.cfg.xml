@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 开启驼峰命名 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启日志 -->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING" />-->
+        <!-- 指定当结果集中值为 null 的时候是否调用映射对象的 setter 方法 -->
+        <setting name="callSettersOnNulls" value="true"/>
+        <!-- 如果类型为空 则插入为空 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <!-- 动映射任何复杂的结果集（无论是否嵌套） -->
+        <setting name="autoMappingBehavior" value="FULL"/>
+    </settings>
+</configuration>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>LiuItems</artifactId>
+        <groupId>LiuItems</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>springcloud-zuul-4001</artifactId>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- springboot启动 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- eureka启动 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+        <!-- zuul启动 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+        <!-- web启动 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+<!--        &lt;!&ndash; sa-token权限认证 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>cn.dev33</groupId>-->
+<!--            <artifactId>sa-token-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; sa-token整合SpringAOP实现注解鉴权 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>cn.dev33</groupId>-->
+<!--            <artifactId>sa-token-spring-aop</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; Sa-Token整合redis (使用jackson序列化方式) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>cn.dev33</groupId>-->
+<!--            <artifactId>sa-token-dao-redis-jackson</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; 提供redis连接池 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.commons</groupId>-->
+<!--            <artifactId>commons-pool2</artifactId>-->
+<!--        </dependency>-->
+        <!-- fastJson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

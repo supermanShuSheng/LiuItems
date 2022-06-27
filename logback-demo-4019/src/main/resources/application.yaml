@@ -1,0 +1,25 @@
+server:
+  port: 4019
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+  logging:
+    config: classpath:logback.xml
+
+spring:
+  application:
+    name: LogBackDemo #\u8FD9\u4E2A\u5F88\u91CD\u8981\uFF0C\u8FD9\u5728\u4EE5\u540E\u7684\u670D\u52A1\u4E0E\u670D\u52A1\u4E4B\u95F4\u76F8\u4E92\u8C03\u7528\u4E00\u822C\u90FD\u662F\u6839\u636E\u8FD9\u4E2Aname
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  output:
+    ansi:
+      enabled: always
+  #  mysql 数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/shusheng?serverTimezone=Asia/Shanghai

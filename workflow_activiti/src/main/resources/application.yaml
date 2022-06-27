@@ -1,0 +1,41 @@
+server:
+  port: 4021
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+  logging:
+    config: classpath:logback.xml
+spring:
+  application:
+    name: WordFlow_Activiti
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  output:
+    ansi:
+      enabled: always
+  #  mysql 数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/shusheng?serverTimezone=Asia/Shanghai
+    # activiti
+  activiti:
+
+    #每次应用启动不检查Activiti数据表是否存在及版本号是否匹配，提升应用启动速度
+#    flase：       默认值。activiti在启动时，会对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常。（生产环境常用）
+#    true：        activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建。（开发时常用）
+#    create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）。（单元测试常用）
+#    drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）。
+    database-schema-update:  true
+    #在项目单独作为一个引擎，本身不部署流程的时候，如果resources目录没有“processes”目录，启动项目报错–找不到processes目录。需要在配置文件中添加以下内容：
+    check-process-definitions: false
+    process-definition-location-prefix: classpath:/processes/
+    process-definition-location-suffixes:
+      -**.bpmn
+      -**.bpmn20.xml
+    #保存历史数据级别设置为full最高级别，便于历史数据的追溯
+    history-level: full

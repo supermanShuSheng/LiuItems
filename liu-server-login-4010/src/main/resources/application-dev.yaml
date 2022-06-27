@@ -1,0 +1,35 @@
+server:
+  port: 4010
+
+spring:
+  application:
+    name: userLogin #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #  mysql 数据源
+  datasource:
+    username: root
+    password: Liu248264@
+    url: jdbc:mysql://139.196.224.150:3306/gyw?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    #  上传文件设置
+    multipart:
+      max-file-size: 10000MB  # 单个文件大小
+      max-request-size: 10000MB  # 单次请求的总文件大小
+
+eureka:
+  client:
+    registerWithEureka: true # 服务注册开关
+    fetchRegistry: true # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://eureka4000.com:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
+
+# 电影上传路径
+upload:
+  filePath: G:\\movic\\

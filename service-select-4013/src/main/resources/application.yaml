@@ -1,0 +1,42 @@
+server:
+  port: 4013
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.shusheng.domain  # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  application:
+    name: select #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource            # 当前数据源操作类型
+    driver-class-name: org.mariadb.jdbc.Driver             # mysql驱动包
+    url: jdbc:mysql://10.255.238.131:13306/diag  # 数据库名称
+    username: root
+    password: Eic_tfhr@213
+    dbcp2:
+      min-idle: 5                                # 数据库连接池的最小维持连接数
+      initial-size: 5                            # 初始化连接数
+      max-total: 5                               # 最大连接数
+      max-wait-millis: 150                       # 等待连接获取的最大超时时间
+
+eureka:
+  client:
+    registerWithEureka: false # 服务注册开关
+    fetchRegistry: false # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://127.0.0.1:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
+
+#knife4j:
+#  # 开启增强配置
+#  enable: true
+#  # 开启生产环境屏蔽
+#  production: true

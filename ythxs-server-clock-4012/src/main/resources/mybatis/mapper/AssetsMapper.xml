@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shusheng.mapper.AssetsMapper">
+
+    <update id="updateAssets">
+        update ${tableName}
+        set LINE_ID = #{subsId},
+            ASSET_ORG_ID = #{orgId},
+            ASSET_RESOURCES = #{assSource},
+            run_date = #{runData},
+            REPAIR_ORG_ID = #{repairOrgId},
+            RUN_ORG_ID = #{runOrgId},
+            EQUIP_OWNER = #{equipOwner}
+        where ${equipFieldId} = #{equipId}
+    </update>
+    <update id="updateDate">
+        begin
+            merge into temp_test  tt using (select '2555511' obj_id,'001' equip_no,'测试222' equip_name from dual) t
+            on(tt.obj_id = t.obj_id)
+            WHEN MATCHED THEN
+                update  set equip_no = t.equip_no,equip_name = t.equip_name
+            WHEN NOT MATCHED THEN
+                insert (obj_id,equip_no,equip_name) values (t.obj_id,t.equip_no,t.equip_name) ;
+            merge into temp_test1  tt using (select '21' obj_id,'001' equip_no,'测试222' equip_name from dual) t
+            on(tt.obj_id = t.obj_id)
+            WHEN MATCHED THEN
+                update  set equip_no = t.equip_no,equip_name = t.equip_name
+            WHEN NOT MATCHED THEN
+                insert (obj_id,equip_no,equip_n ame1) values (t.obj_id,t.equip_no,t.equip_name) ;
+        end;
+    </update>
+
+
+    <select id="getCards" resultType="com.shusheng.domain.Card">
+        with ui as
+                 (select bd.smkh card_id,
+                         bd.smhzm card_name,
+                         bd.smhzdz addr,
+                         '' mobile,
+                         '乐电通' card_type,
+                         '' dept_id
+                  from dwh_cms_lsykt.bdxx bd
+                  union
+                  select user_id card_id,
+                         user_name card_name,
+                         user_addr addr,
+                         ui.mobile,
+                         '电' card_type,
+                         ui.dept_id
+                  from dwh_cms_datacenter.user_inf ui
+                  union
+                  select user_id card_id,
+                         user_name card_name,
+                         user_addr addr,
+                         ui.mobile,
+                         '水' card_type,
+                         ui.dept_id
+                  from dwh_cms_lswater.user_inf ui
+                  union
+                  select user_id card_id,
+                         user_name card_name,
+                         user_addr addr,
+                         ui.mobile,
+                         '气' card_type,
+                         ui.dept_id
+                  from dwh_cms_lsgas1.user_inf ui)
+
+
+        select distinct ui.card_id,
+                        max(card_name) over(partition by card_id) card_name,
+                        max(addr) over(partition by card_id) addr,
+                        max(mobile) over(partition by card_id) mobile,
+                        card_type,
+                        dept_id,
+                        bm.fqc || '/' || sb.fqc org_name
+        from ui,
+             dwh_cms_datacenter.system_bmxx sb,
+             dwh_cms_datacenter.system_bmxx bm
+        where ui.dept_id = sb.fbm(+)
+          and sb.fzr = bm.fbm(+)
+    </select>
+
+
+</mapper>

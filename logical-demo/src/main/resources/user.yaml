@@ -1,0 +1,6 @@
+person:
+  age: 18
+  name: 15
+  loves:
+    - 足球
+    - 篮球

@@ -1,0 +1,68 @@
+server:
+  port: 4001
+
+spring:
+  application:
+    name: zuul
+#  # 配置redis
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379    #  端口
+#    password: admin   #  密码
+#    jedis: #  连接池
+#      pool:
+#        max-active: 8  # 连接池最大连接数
+#        max-wait: -1  #连接池最大阻塞等待时间 （使用负值表示没有限制）
+#        max-idle: 500  #连接池中的最大空闲连接
+#        min-idle: 0  #连接池中的最小空闲连接
+#    lettuce:
+#      shutdown-timeout: 0
+#    timeout: 30000  #连接超时时间（毫秒）
+#    database: 0 # 使用db0数据库进行存储
+  # 服务上设置上传之后  服务器也要进行设置 要不然会失败
+  servlet:
+    #  上传文件设置
+    multipart:
+      max-file-size: 1000MB  # 单个文件大小
+      max-request-size: 10000MB  # 单次请求的总文件大小
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+eureka:
+  client:
+    registerWithEureka: true # 服务注册开关
+    fetchRegistry: true # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://eureka4000.com:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
+
+zuul:
+  #需要忽略的头部信息，不在传播到其他服务
+  sensitiveHeaders: Cookie,Set-Cookie,satoken
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods
+
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+  routes:
+    liu-userLogin: # 路由名称，名称任意，路由名称唯一
+      path: /user/** # 访问路径
+      serviceId: userLogin # 指定服务ID，会自动从Eureka中找到此服务的ip和端口
+      stripPrefix: false # 代理转发时去掉前缀，false:代理转发时不去掉前缀 例如:为true时请求 /product/get/1，代理转发到/get/1
+      sensitive-headers:  #session保持
+
+
+knife4j:
+  enableAggregation: true  # 开启服务聚合组件
+  eureka:
+    enable: true # 开启eureka模式
+    serviceUrl: http://eureka4000.com:4000/eureka  # eureka注册地址
+    routes:  # 需要进行聚合的服务
+      - name: 用户登录接口
+        serviceName: userLogin
+        location: /v2/api-docs

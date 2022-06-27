@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>LiuItems</groupId>
+    <artifactId>LiuItems</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- 打包方式为pom  父级的pom文件只作项目的子模块的整合，在maven install时不会生成jar/war压缩包  -->
+    <packaging>pom</packaging>
+
+    <!-- 设置maven版本 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.9.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <!-- 版本控制 -->
+        <lombok.version>1.18.12</lombok.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <fastjson.version>1.2.58</fastjson.version>
+        <druid.version>1.1.12</druid.version>
+        <mybatis.version>2.1.3</mybatis.version>
+        <pagehelper.starter.version>1.3.0</pagehelper.starter.version>
+        <web.starter.version>2.4.3</web.starter.version>
+        <spring.cloud.version>Hoxton.SR10</spring.cloud.version>
+        <mysql.connector.version>8.0.25</mysql.connector.version>
+        <commons.lang3.version>3.11</commons.lang3.version>
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+        <hutool.version>5.6.1</hutool.version>
+        <com.google.zxing.version>3.3.3</com.google.zxing.version>
+        <sa.token.start>1.20.0</sa.token.start>
+        <sa.token.aop>1.20.0</sa.token.aop>
+        <knife4j.version>2.0.8</knife4j.version>
+        <ojdbc6.version>1.2.0.4</ojdbc6.version>
+        <pagehelper.starter.version>1.2.3</pagehelper.starter.version>
+        <sa.token.redis>1.20.0</sa.token.redis>
+        <spring.kafka>2.7.3</spring.kafka>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!-- 实体类转换 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <!-- Json使用 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--druid数据源 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- mybatis启动器 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- 分页的使用 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.starter.version}</version>
+            </dependency>
+            <!-- 工具包的使用 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <!-- web -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${web.starter.version}</version>
+            </dependency>
+            <!-- spring cloud 版本管理 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <!-- 解决多继承 -->
+                <scope>import</scope>
+            </dependency>
+            <!-- mysql -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
+            </dependency>
+            <!-- 工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.7.22</version>
+            </dependency>
+            <!-- 二维码生成 -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${com.google.zxing.version}</version>
+            </dependency>
+            <!-- sa-token权限认证 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa.token.start}</version>
+            </dependency>
+            <!-- sa-token整合SpringAOP实现注解鉴权 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-aop</artifactId>
+                <version>${sa.token.aop}</version>
+            </dependency>
+            <!-- Sa-Token整合redis (使用jackson序列化方式) -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <version>${sa.token.redis}</version>
+            </dependency>
+            <!-- 接口文档knife4j（单个模块不能进行访问 必须通过网关进行访问） -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!--oracle-->
+            <dependency>
+                <groupId>org.oracle</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>${ojdbc6.version}</version>
+            </dependency>
+            <!-- spring集成kfk -->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring.kafka}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>common-8081</module>
+        <module>springcloud-eureka-4000</module>
+        <module>springcloud-zuul-4001</module>
+        <module>logical-demo</module>
+        <module>liu-server-login-4010</module>
+        <module>liu-server-api-4002</module>
+        <module>liu-server-docs-4011</module>
+        <module>ythxs-server-clock-4012</module>
+        <module>service-select-4013</module>
+        <module>Packet-Liu</module>
+<!--        <module>mybatis-plus-userEntity-4004</module>-->
+        <module>kafka-demo-4015</module>
+    </modules>
+
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>2.3.9.RELEASE</version>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
+
+</project>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shusheng.mapper.OrgMapper">
+
+
+    <update id="updateOrg">
+        MERGE INTO lspms_pub_org a
+        USING (SELECT decode(#{sybfl}, '电', '01', '水', '02', '03') as sybfl,
+                      #{orgNameList} as org_name,
+                      l.org_level,
+                      l.p_org_id,
+                      l.p_org_code,
+                      l.org_code
+               FROM (select '06' as org_level,
+                            o.org_id as p_org_id,
+                            o.org_code as p_org_code,
+                            nvl((select max(org_code)
+                                 from lspms_pub_org org
+                                 where org.p_org_id = o.org_id) + 1,
+                                o.org_code || '01') as org_code
+                     from lspms_pub_org o
+                     where org_name = #{orgName}
+                    ) l) b
+        ON (a.org_name = b.org_name)
+
+        WHEN NOT MATCHED THEN
+            INSERT
+                (org_id, org_name, org_code, org_level, p_org_id, p_org_code, sybfl)
+            VALUES
+            (sys_guid(),
+             b.org_name,
+             b.org_code,
+             b.org_level,
+             b.p_org_id,
+             b.p_org_code,
+             b.sybfl)
+    </update>
+
+
+    <update id="updateDept">
+        MERGE INTO lspms_pub_dept d
+        USING (select o.org_id,
+                      #{deptMame} as dept_name,
+                      nvl((select max(d.dept_no) from lspms_pub_dept d where d.org_id = o.org_id)+1, o.org_code||'01') as dept_no,
+                      lpad(nvl((select max(d.sort_no) from lspms_pub_dept d where d.org_id = o.org_id)+1, '1'),3,0) as sort_no
+               from lspms_pub_org o
+               where org_name = #{orgName}) b
+        ON (d.org_id = b.org_id and d.dept_name = b.dept_name)
+
+        WHEN NOT MATCHED THEN
+            INSERT
+                (dept_id, dept_no, dept_name, org_id, sort_no, p_dept_id)
+            VALUES
+            (sys_guid(),
+             b.dept_no,
+             b.dept_name,
+             b.org_id,
+             b.sort_no,
+             'root')
+    </update>
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shusheng.mapper.CodeMapper">
+
+    <!-- 获取码表列表信息 -->
+    <select id="getCodeInfos" resultType="com.shusheng.domain.CodeInfoPo">
+        select c.obj_id,c.code_value,c.code_text,c.p_obj_id from lspms_pub_code c
+        <where>
+            <if test="objId != null and objId != ''">
+                and c.objId like '%' || #{objId} || '%'
+            </if>
+            <if test="codeValue != null and codeValue != ''">
+                and c.code_value like '%' || #{codeValue} || '%'
+            </if>
+            <if test="codeText != null and codeText != ''">
+                and c.code_text like '%' || #{codeText} || '%'
+            </if>
+            <if test="pobjId != null and pobjId != ''">
+                and c.p_obj_id like '%' || #{pobjId} || '%'
+            </if>
+        </where>
+    </select>
+</mapper>

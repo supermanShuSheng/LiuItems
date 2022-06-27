@@ -1,0 +1,31 @@
+server:
+  port: 4003
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+#  type-aliases-package: com.shusheng.domain  # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  application:
+    name: userLogin #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  #  mysql 数据源
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/shusheng?serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+eureka:
+  client:
+    registerWithEureka: false # 服务注册开关
+    fetchRegistry: false # 服务发现开关
+    serviceUrl: # 客户端(服务提供者)注册到哪一个Eureka Server服务注册中心，多个用逗号分隔
+      # 单机版 Eureka 服务注册中心
+      defaultZone: http://127.0.0.1:4000/eureka
+  instance:
+    instanceId: ${spring.cloud.client.ip-address}/${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
+    preferIpAddress: true     #访问路径可以显示IP地址
