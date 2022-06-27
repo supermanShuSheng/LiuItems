@@ -11,7 +11,7 @@ public class leccCode {
         ListNode valid = mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(3))),
                 new ListNode(1, new ListNode(3, new ListNode(4))));
 
-        System.out.println("s = " + valid);
+        System.out.println("s = 1234" + valid);
     }
     static class ListNode {
       int val;
