@@ -40,6 +40,8 @@ public class FutureController {
 
     @GetMapping("/queryComple")
     public R queryComple() throws ExecutionException, InterruptedException {
+        System.out.println("123456");
+
        return compleServer.getFuture();
     }
 
