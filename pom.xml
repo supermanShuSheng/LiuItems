@@ -33,7 +33,7 @@
         <mysql.connector.version>8.0.25</mysql.connector.version>
         <commons.lang3.version>3.11</commons.lang3.version>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
-        <hutool.version>5.6.1</hutool.version>
+        <hutool.version>5.8.4</hutool.version>
         <com.google.zxing.version>3.3.3</com.google.zxing.version>
         <sa.token.start>1.20.0</sa.token.start>
         <sa.token.aop>1.20.0</sa.token.aop>
@@ -113,7 +113,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>5.7.22</version>
+                <version>5.8.4</version>
             </dependency>
             <!-- 二维码生成 -->
             <dependency>
@@ -171,8 +171,10 @@
         <module>ythxs-server-clock-4012</module>
         <module>service-select-4013</module>
         <module>Packet-Liu</module>
+        <module>datax-demo-4021</module>
 <!--        <module>mybatis-plus-userEntity-4004</module>-->
         <module>kafka-demo-4015</module>
+        <module>easy-reduce-jar</module>
     </modules>
 
 

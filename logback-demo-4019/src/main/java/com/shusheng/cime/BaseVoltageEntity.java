@@ -4,6 +4,7 @@ import com.shusheng.commons.CimeNode;
 import lombok.Data;
 
 /**
+ * 电压等级
  * @author 刘闯
  * @date 2022/8/6
  */

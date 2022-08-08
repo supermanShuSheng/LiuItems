@@ -2,8 +2,8 @@ package com.shusheng.demo;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.lang.Opt;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
@@ -30,10 +30,46 @@ import java.util.stream.Collectors;
  */
 public class Demo123 {
     public static void main(String[] args) throws InterruptedException, IOException {
-        String str = "";
+
+        System.out.println(IdUtil.nanoId());
+        System.out.println(IdUtil.nanoId(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+        System.out.println(RandomUtil.randomNumbers(18));
+
+    }
 
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Wo {
 
+        private String id;
+        private boolean blag;
+        private double dou;
+        private int in;
+
+        private String startPoint;
+
+
+        private String endPoint;
+    }
+
+    public void outFor(){
+        out:for (int i = 0; i < 100; i++) {
+            System.out.println("i = " + i);
+            for (int j = 0; j < 100; j++) {
+                System.out.println("j = " + j);
+                if (j == 3){
+                    break out;
+                }
+            }
+        }
     }
 
     /**

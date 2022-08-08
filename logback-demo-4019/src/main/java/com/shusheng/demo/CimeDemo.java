@@ -27,15 +27,15 @@ public class CimeDemo {
         baseVoltageEntities.add(b2);
 
         new Thread(() -> {
-            baseVoltageService.appendCimeFile(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities);
+            baseVoltageService.appendCimeLock(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities, "河南");
         }).start();
 
         new Thread(() -> {
-            baseVoltageService.appendCimeFile(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities);
+            baseVoltageService.appendCimeLock(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities, "河南");
         }).start();
 
         new Thread(() -> {
-            baseVoltageService.appendCimeFile(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities);
+            baseVoltageService.appendCimeLock(FileUtil.file("C:\\Users\\admin\\Desktop\\线损URL1.CIME"), baseVoltageEntities, "河南");
         }).start();
     }
 }

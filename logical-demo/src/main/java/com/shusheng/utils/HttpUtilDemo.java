@@ -52,7 +52,7 @@ public class HttpUtilDemo {
             }
 
             @Override
-            public void progress(long progressSize) {
+            public void progress(long total, long progressSize) {
                 Console.log("已下载：{}", FileUtil.readableFileSize(progressSize));
             }
 
