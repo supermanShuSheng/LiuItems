@@ -1,0 +1,45 @@
+{
+    "job": {
+        "setting": {
+            "speed": {
+                "channel": 5
+            }
+        },
+        "content": [
+            {
+                "reader": {
+                    "name": "sqlserverreader",
+                    "parameter": {
+                        "username": "dl",
+                        "password": "ssdl168",
+                        "column": ["Id","MeterId","ValueTime"],
+                        "where": "ValueTime between '2022-07-20' and '2022-07-21'",
+                        "connection": [
+                            {
+                                "table": ["MeterCurv"],
+                                "jdbcUrl": ["jdbc:sqlserver://123.207.163.92:16892;databaseName=emms;autoReconnect=true"]
+                            }
+                        ]
+                    }
+                },
+                "writer": {
+                    "name": "mysqlwriter",
+                    "parameter": {
+                        "username": "root",
+                        "password": "123456",
+                        "writeMode": "",
+                        "column": ["*"],
+                        "session": [],
+                        "preSql": [],
+                        "connection": [
+                            {
+                                "jdbcUrl": "jdbc:mysql://192.168.1.200:3306/lossapp",
+                                "table": ["MeterCurv"]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}
